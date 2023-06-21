@@ -1,4 +1,4 @@
-#[derive(PartialEq, Eq, Hash)]
+#[derive(PartialEq, Eq, Hash, Clone)]
 pub enum PieceType {
     Horse,
     Hook,
@@ -19,4 +19,21 @@ impl PieceType {
             PieceType::King => std::u32::MAX,
         }
     }
+
+    pub fn unicode(self) -> char {
+        match self {
+            PieceType::Pun => '♟',
+            PieceType::Bishop => 'B',
+            PieceType::Horse => 'H',
+            PieceType::Hook => 'R',
+            PieceType::Queen => '♕',
+            PieceType::King => 'K',
+        }
+    }
+}
+
+#[derive(PartialEq, Eq, Hash, Clone)]
+pub enum PieceColor {
+    White,
+    Black,
 }
