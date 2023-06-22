@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::{
     entities::piece::Piece,
-    strategies::{PunStrategy, QueenStrategy},
+    strategies::{pun::PunStrategy, queen::QueenStrategy},
     utils::{PieceColor, PieceType, PieceType::*},
 };
 

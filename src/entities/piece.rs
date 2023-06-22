@@ -1,3 +1,6 @@
+use std::fmt::Debug;
+use std::fmt::{Formatter, Result};
+
 use crate::{
     strategies::PieceStrategy,
     utils::{PieceColor, PieceType},
@@ -9,6 +12,18 @@ pub struct Piece {
     pub piece_type: PieceType,
     pub color: PieceColor,
     pub pos: Option<(usize, usize)>,
+}
+
+impl Debug for Piece {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(
+            f,
+            "Piece {{ piece_type: {:?}, color: {:?}, pos: {:?} }}",
+            self.piece_type.to_owned().unicode(),
+            self.color,
+            self.pos
+        )
+    }
 }
 
 impl Piece {

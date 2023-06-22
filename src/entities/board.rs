@@ -1,20 +1,24 @@
-use std::iter::Enumerate;
-
-use super::piece::Piece;
+use super::{movement::Movement, piece::Piece};
 use crate::{
     factory::PieceFactory,
     utils::{PieceColor::*, PieceType::*},
 };
 
 pub struct Board {
-    tiles: Vec<Vec<Option<Piece>>>,
+    pub tiles: Vec<Vec<Option<Piece>>>,
+    pub height: usize,
+    pub width: usize,
 }
 
 impl Board {
     pub fn new(x: usize, y: usize) -> Board {
         let tiles = vec![vec![None; y]; x];
 
-        Board { tiles }
+        Board {
+            tiles,
+            height: y,
+            width: x,
+        }
     }
 
     pub fn standart_board() -> Board {
@@ -22,25 +26,31 @@ impl Board {
         let factory = PieceFactory::new();
         let queen = PieceFactory::create_queen(White);
         board.place_piece(queen, 3, 3);
-        board.place_piece(factory.create(Pun, White), 1, 0);
-        board.place_piece(factory.create(Pun, White), 1, 1);
-        board.place_piece(factory.create(Pun, White), 1, 2);
-        board.place_piece(factory.create(Pun, White), 1, 3);
+        board.place_piece(factory.create(Pun, Black), 1, 0);
+        board.place_piece(factory.create(Pun, Black), 1, 1);
+        board.place_piece(factory.create(Pun, Black), 1, 2);
+        board.place_piece(factory.create(Pun, Black), 1, 3);
+        board.place_piece(factory.create(Pun, Black), 1, 4);
+        // board.place_piece(factory.create(Pun, Black), 1, 5);
+        board.place_piece(factory.create(Pun, Black), 1, 6);
+        board.place_piece(factory.create(Pun, Black), 1, 7);
+
+        board.place_piece(factory.create(Pun, White), 6, 3);
 
         board
     }
 
-    pub fn print_board(self) -> () {
+    pub fn print_board(&self) -> () {
         print!("  ");
         for idx in 0..self.tiles.len() {
             print!("{} ", idx);
         }
         println!("");
-        for (idx, row) in self.tiles.into_iter().enumerate() {
+        for (idx, row) in self.tiles.iter().enumerate() {
             print!("{} ", idx);
             for tile in row {
                 match tile {
-                    Some(piece) => print!("{} ", piece.piece_type.unicode()),
+                    Some(piece) => print!("{} ", piece.to_owned().piece_type.unicode()),
                     None => print!("0 "),
                 }
             }
@@ -59,7 +69,11 @@ impl Board {
         old_piece
     }
 
-    fn move_piece(&self, piece: &Piece) {
-        piece.strategy.moveset(piece, self);
+    pub fn get_tile(&self, x: usize, y: usize) -> Option<&Piece> {
+        self.tiles[x][y].as_ref()
+    }
+
+    pub fn possible_moves(&self, piece: &Piece) -> Vec<Movement> {
+        piece.strategy.calc_moveset(piece, self)
     }
 }
