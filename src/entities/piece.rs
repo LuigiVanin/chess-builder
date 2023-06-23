@@ -1,6 +1,12 @@
 use std::fmt::Debug;
 use std::fmt::{Formatter, Result};
 
+use crate::strategies::bishop::BishopStrategy;
+use crate::strategies::hook::HookStrategy;
+use crate::strategies::king::KingStrategy;
+use crate::strategies::knight::KnightStrategy;
+use crate::strategies::pun::PunStrategy;
+use crate::strategies::queen::QueenStrategy;
 use crate::{
     strategies::PieceStrategy,
     utils::{PieceColor, PieceType},

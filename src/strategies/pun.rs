@@ -7,7 +7,7 @@ use super::PieceStrategy;
 pub struct PunStrategy;
 
 impl PieceStrategy for PunStrategy {
-    fn calc_moveset(&self, piece: &Piece, board: &Board) -> Vec<Movement> {
+    fn moveset(&self, piece: &Piece, board: &Board) -> Vec<Movement> {
         println!("Pun moves");
 
         return vec![];

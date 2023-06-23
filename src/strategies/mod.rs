@@ -1,8 +1,12 @@
-use crate::entities::{board::Board, movement::Movement, piece::Piece};
-
+pub mod bishop;
+pub mod hook;
+pub mod king;
+pub mod knight;
 pub mod pun;
 pub mod queen;
 pub mod utils;
+
+use crate::entities::{board::Board, movement::Movement, piece::Piece};
 
 pub trait PieceStrategyClone {
     fn clone_box(&self) -> Box<dyn PieceStrategy>;
@@ -18,7 +22,7 @@ where
 }
 
 pub trait PieceStrategy: PieceStrategyClone {
-    fn calc_moveset(&self, piece: &Piece, board: &Board) -> Vec<Movement>;
+    fn moveset(&self, piece: &Piece, board: &Board) -> Vec<Movement>;
 }
 
 impl Clone for Box<dyn PieceStrategy> {

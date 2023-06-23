@@ -21,21 +21,27 @@ impl Board {
         }
     }
 
-    pub fn standart_board() -> Board {
+    pub fn test_board() -> Board {
         let mut board = Board::new(8, 8);
         let factory = PieceFactory::new();
-        let queen = PieceFactory::create_queen(White);
+        let queen = PieceFactory::Bishop(White);
         board.place_piece(queen, 3, 3);
         board.place_piece(factory.create(Pun, Black), 1, 0);
         board.place_piece(factory.create(Pun, Black), 1, 1);
         board.place_piece(factory.create(Pun, Black), 1, 2);
         board.place_piece(factory.create(Pun, Black), 1, 3);
         board.place_piece(factory.create(Pun, Black), 1, 4);
-        // board.place_piece(factory.create(Pun, Black), 1, 5);
+        board.place_piece(factory.create(Pun, Black), 1, 5);
         board.place_piece(factory.create(Pun, Black), 1, 6);
         board.place_piece(factory.create(Pun, Black), 1, 7);
+        board.place_piece(factory.create(Pun, Black), 3, 5);
 
         board.place_piece(factory.create(Pun, White), 6, 3);
+        board.place_piece(factory.create(Pun, White), 6, 6);
+
+        board.place_piece(factory.create(King, White), 2, 2);
+
+        board.place_piece(factory.create(Knight, Black), 5, 4);
 
         board
     }
@@ -74,6 +80,6 @@ impl Board {
     }
 
     pub fn possible_moves(&self, piece: &Piece) -> Vec<Movement> {
-        piece.strategy.calc_moveset(piece, self)
+        piece.strategy.moveset(piece, self)
     }
 }

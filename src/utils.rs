@@ -2,7 +2,7 @@ use crate::entities::movement::{MoveStatus, Movement};
 
 #[derive(PartialEq, Eq, Hash, Clone)]
 pub enum PieceType {
-    Horse,
+    Knight,
     Hook,
     Bishop,
     Queen,
@@ -15,7 +15,7 @@ impl PieceType {
         match self {
             PieceType::Pun => 1,
             PieceType::Bishop => 3,
-            PieceType::Horse => 3,
+            PieceType::Knight => 3,
             PieceType::Hook => 5,
             PieceType::Queen => 10,
             PieceType::King => std::u32::MAX,
@@ -27,7 +27,7 @@ impl PieceType {
             // PieceType::Pun => '♟',
             PieceType::Pun => 'P',
             PieceType::Bishop => 'B',
-            PieceType::Horse => 'H',
+            PieceType::Knight => 'H',
             PieceType::Hook => 'R',
             // PieceType::Queen => '♕',
             PieceType::Queen => 'Q',
@@ -42,7 +42,7 @@ pub enum PieceColor {
     Black,
 }
 
-pub fn print_movement_table(moves: &Vec<Movement>) {
+pub fn print_movement_map(moves: &Vec<Movement>) {
     let mut empty_mtx = vec![vec![0; 8]; 8];
     for m in moves {
         empty_mtx[m.src.0 as usize][m.src.1 as usize] = 5;
@@ -75,4 +75,14 @@ pub fn print_movement_table(moves: &Vec<Movement>) {
             );
         }
     }
+}
+
+pub enum Pattern {
+    Inifinite,
+    Once,
+}
+
+pub struct PieceMoveset {
+    pub moves: Vec<(i8, i8)>,
+    pub pattern: Pattern,
 }

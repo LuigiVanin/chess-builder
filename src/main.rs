@@ -1,33 +1,41 @@
 mod entities;
 mod factory;
 // mod strategies_2;
+mod chess;
+mod helpers;
 mod strategies;
 mod utils;
 
+use chess::Chess;
 use entities::{board::Board, piece::Piece};
 
-use crate::{
-    entities::movement::MoveStatus,
-    factory::PieceFactory,
-    utils::{print_movement_table, PieceColor::*, PieceType::*},
-};
-
-struct Game {
-    board: Board,
-    dead_pieces: [Vec<Piece>; 2], // First index is player with white pieces, second is player with black pieces
-}
+use crate::utils::print_movement_map;
 
 fn main() {
-    let mut chess = Game {
-        board: Board::standart_board(),
-        dead_pieces: [Vec::new(), Vec::new()],
-    };
+    // let mut chess = Game {
+    //     board: Board::standart_board(),
+    //     dead_pieces: [Vec::new(), Vec::new()],
+    // };
 
-    chess.board.print_board();
-    let opt_piece = chess.board.get_tile(3, 3);
-    println!("{:?}", opt_piece);
+    let chess = Chess::StandartBoard();
+
+    chess.print_board();
+    let opt_piece = chess.get_tile(3, 3);
+
     if let Some(piece) = opt_piece {
-        let mov = chess.board.possible_moves(piece);
-        print_movement_table(&mov);
+        let mov = chess.possible_moves(piece);
+        print_movement_map(&mov);
+    }
+
+    let opt_king = chess.get_tile(2, 2);
+    if let Some(king) = opt_king {
+        let mov = chess.possible_moves(king);
+        print_movement_map(&mov);
+    }
+
+    let opt_knight = chess.get_tile(5, 4);
+    if let Some(knight) = opt_knight {
+        let mov = chess.possible_moves(knight);
+        print_movement_map(&mov);
     }
 }
