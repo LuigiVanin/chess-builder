@@ -39,7 +39,7 @@ fn main() {
         print_movement_map(&mov);
     }
 
-    let opt_pun = chess.get_tile(5, 6);
+    let opt_pun = chess.get_tile(4, 7);
     if let Some(pun) = opt_pun {
         let mov = chess.possible_moves(pun);
         print_movement_map(&mov);

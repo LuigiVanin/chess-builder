@@ -1,6 +1,7 @@
 use super::{movement::Movement, piece::Piece};
 use crate::{
     factory::PieceFactory,
+    helpers::{board_builder::BoardBuilder, Builder},
     utils::{PieceColor::*, PieceType::*},
 };
 
@@ -22,29 +23,24 @@ impl Board {
     }
 
     pub fn test_board() -> Board {
-        let mut board = Board::new(8, 8);
-        let factory = PieceFactory::new();
-        let queen = PieceFactory::Bishop(White);
-        board.place_piece(queen, 3, 3);
-        board.place_piece(factory.create(Pun, Black), 1, 0);
-        board.place_piece(factory.create(Pun, Black), 1, 1);
-        board.place_piece(factory.create(Pun, Black), 1, 2);
-        board.place_piece(factory.create(Pun, Black), 1, 3);
-        board.place_piece(factory.create(Pun, Black), 1, 4);
-        board.place_piece(factory.create(Pun, Black), 1, 5);
-        board.place_piece(factory.create(Pun, Black), 1, 6);
-        board.place_piece(factory.create(Pun, Black), 1, 7);
-        board.place_piece(factory.create(Pun, Black), 3, 5);
-        board.place_piece(factory.create(Pun, Black), 5, 6);
-
-        board.place_piece(factory.create(Pun, White), 6, 3);
-        board.place_piece(factory.create(Pun, White), 6, 6);
-
-        board.place_piece(factory.create(King, White), 2, 2);
-
-        board.place_piece(factory.create(Knight, Black), 5, 4);
-
-        board
+        BoardBuilder::new(8, 8)
+            .add_pun((1, 0), Black)
+            .add_pun((1, 1), Black)
+            .add_pun((1, 2), Black)
+            .add_pun((1, 3), Black)
+            .add_pun((1, 4), Black)
+            .add_pun((1, 5), Black)
+            .add_pun((1, 6), Black)
+            .add_pun((1, 7), Black)
+            .add_pun((6, 3), White)
+            .add_pun((6, 6), White)
+            .add_pun((5, 6), White)
+            .add_pun((2, 2), White)
+            .add_pun((4, 7), Black)
+            .add_knight((5, 4), Black)
+            .add_pun((3, 5), Black)
+            .add_queen((3, 3), White)
+            .build()
     }
 
     pub fn print_board(&self) -> () {

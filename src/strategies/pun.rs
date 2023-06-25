@@ -24,8 +24,8 @@ impl PieceStrategy for PunStrategy {
             .iter()
             .copied()
             .filter(|(x, _)| match piece.color {
-                PieceColor::White => x > &0,
-                PieceColor::Black => x < &0,
+                PieceColor::White => x < &0,
+                PieceColor::Black => x > &0,
             })
             .collect();
         let pun_moves = PieceMoveset {
@@ -39,7 +39,10 @@ impl PieceStrategy for PunStrategy {
                 let (_, dst_y) = mov.dst;
                 let (_, src_y) = mov.src;
                 if dst_y == src_y {
-                    return true;
+                    if let MoveStatus::Normal = mov.status {
+                        return true;
+                    }
+                    return false;
                 }
                 if let MoveStatus::Attack = mov.status {
                     return true;
