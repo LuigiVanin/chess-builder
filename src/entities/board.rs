@@ -35,6 +35,7 @@ impl Board {
         board.place_piece(factory.create(Pun, Black), 1, 6);
         board.place_piece(factory.create(Pun, Black), 1, 7);
         board.place_piece(factory.create(Pun, Black), 3, 5);
+        board.place_piece(factory.create(Pun, Black), 5, 6);
 
         board.place_piece(factory.create(Pun, White), 6, 3);
         board.place_piece(factory.create(Pun, White), 6, 6);

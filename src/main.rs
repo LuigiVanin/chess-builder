@@ -17,7 +17,7 @@ fn main() {
     //     dead_pieces: [Vec::new(), Vec::new()],
     // };
 
-    let chess = Chess::StandartBoard();
+    let chess = Chess::TestBoard();
 
     chess.print_board();
     let opt_piece = chess.get_tile(3, 3);
@@ -37,5 +37,13 @@ fn main() {
     if let Some(knight) = opt_knight {
         let mov = chess.possible_moves(knight);
         print_movement_map(&mov);
+    }
+
+    let opt_pun = chess.get_tile(5, 6);
+    if let Some(pun) = opt_pun {
+        let mov = chess.possible_moves(pun);
+        print_movement_map(&mov);
+    } else {
+        println!("No pun found");
     }
 }

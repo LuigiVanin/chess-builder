@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use crate::utils::PieceColor::*;
 use crate::{
     entities::{
@@ -11,6 +13,8 @@ use crate::{
 pub struct Chess {
     board: Board,
     dead_pieces: [Vec<Piece>; 2], // First index is player with white pieces, second is player with black pieces
+    movement_cache: Vec<Rc<Movement>>,
+    movement_history: Vec<Movement>,
 }
 
 impl Chess {
@@ -18,6 +22,8 @@ impl Chess {
         Self {
             board,
             dead_pieces: [Vec::new(), Vec::new()],
+            movement_cache: Vec::new(),
+            movement_history: Vec::new(),
         }
     }
 
