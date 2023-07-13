@@ -46,4 +46,5 @@ fn main() {
     } else {
         println!("No pun found");
     }
+    chess.run();
 }

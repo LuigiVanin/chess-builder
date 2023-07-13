@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::utils::PieceColor::*;
+use crate::utils::PieceColor::{self, *};
 use crate::{
     entities::{
         board::Board,
@@ -10,20 +10,27 @@ use crate::{
     helpers::{board_builder::BoardBuilder, Builder},
 };
 
+pub struct Player {
+    color: PieceColor,
+    name: String,
+}
+
 pub struct Chess {
     board: Board,
     dead_pieces: [Vec<Piece>; 2], // First index is player with white pieces, second is player with black pieces
     movement_cache: Vec<Rc<Movement>>,
     movement_history: Vec<Movement>,
+    pub players: [Player; 2],
 }
 
 impl Chess {
-    pub fn new(board: Board) -> Self {
+    pub fn new(board: Board, player_1: Player, player_2: Player) -> Self {
         Self {
             board,
             dead_pieces: [Vec::new(), Vec::new()],
             movement_cache: Vec::new(),
             movement_history: Vec::new(),
+            players: [player_1, player_2],
         }
     }
 
@@ -63,11 +70,29 @@ impl Chess {
                 .add_queen((7, 4), White)
                 .add_king((7, 3), White)
                 .build(),
+            Player {
+                color: White,
+                name: String::from("Player 1"),
+            },
+            Player {
+                color: Black,
+                name: String::from("Player 2"),
+            },
         )
     }
 
     pub fn TestBoard() -> Self {
-        Self::new(Board::test_board())
+        Self::new(
+            Board::test_board(),
+            Player {
+                color: White,
+                name: String::from("Player 1"),
+            },
+            Player {
+                color: Black,
+                name: String::from("Player 2"),
+            },
+        )
     }
 
     pub fn get_tile(&self, x: usize, y: usize) -> Option<&Piece> {
@@ -80,5 +105,11 @@ impl Chess {
 
     pub fn possible_moves(&self, piece: &Piece) -> Vec<Movement> {
         self.board.possible_moves(piece)
+    }
+
+    pub fn move_piece() {}
+
+    pub fn run(self) {
+        println!("Running");
     }
 }
