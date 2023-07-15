@@ -11,7 +11,7 @@ use entities::{board::Board, piece::Piece};
 
 use crate::utils::print_movement_map;
 
-fn main() {
+fn main() -> () {
     // let mut chess = Game {
     //     board: Board::standart_board(),
     //     dead_pieces: [Vec::new(), Vec::new()],
@@ -46,5 +46,4 @@ fn main() {
     } else {
         println!("No pun found");
     }
-    chess.run();
 }

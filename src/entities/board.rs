@@ -61,6 +61,10 @@ impl Board {
         }
     }
 
+    pub fn take_piece(&mut self, x: usize, y: usize) -> Option<Piece> {
+        self.tiles[x][y].take()
+    }
+
     pub fn place_piece(&mut self, mut piece: Piece, x: usize, y: usize) -> Option<Piece> {
         let mut old_piece = self.tiles[x][y].take();
         piece.pos = Some((x, y));

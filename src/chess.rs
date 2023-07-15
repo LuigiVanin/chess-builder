@@ -1,12 +1,9 @@
 use std::rc::Rc;
 
+use crate::utils::is_valid_movement;
 use crate::utils::PieceColor::{self, *};
 use crate::{
-    entities::{
-        board::Board,
-        movement::{MoveStatus, Movement},
-        piece::Piece,
-    },
+    entities::{board::Board, movement::Movement, piece::Piece},
     helpers::{board_builder::BoardBuilder, Builder},
 };
 
@@ -107,9 +104,27 @@ impl Chess {
         self.board.possible_moves(piece)
     }
 
-    pub fn move_piece() {}
-
-    pub fn run(self) {
-        println!("Running");
+    pub fn move_piece(
+        mut self,
+        src: (usize, usize),
+        dst: (usize, usize),
+        player: Player,
+    ) -> Result<Option<Piece>, &'static str> {
+        let src_tile = self.board.get_tile(src.0, src.1);
+        if let Some(piece) = src_tile {
+            if piece.color == player.color {
+                let movs = self.possible_moves(piece);
+                if !is_valid_movement(movs, dst) {
+                    return Err("Invalid movement");
+                }
+                let removed_piece = self.board.place_piece(piece.clone(), dst.0, dst.1);
+                self.board.take_piece(src.0, src.1);
+            } else {
+                return Err("Not your piece");
+            }
+        } else {
+            return Err("No piece found");
+        }
+        Err("Not implemented")
     }
 }

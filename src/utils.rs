@@ -77,6 +77,15 @@ pub fn print_movement_map(moves: &Vec<Movement>) {
     }
 }
 
+pub fn is_valid_movement(movs: Vec<Movement>, dst: (usize, usize)) -> bool {
+    for mov in movs {
+        if mov.dst == dst {
+            return true;
+        }
+    }
+    return false;
+}
+
 pub enum Pattern {
     Inifinite,
     Once,
